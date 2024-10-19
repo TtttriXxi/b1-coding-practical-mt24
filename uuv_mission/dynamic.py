@@ -2,6 +2,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
+import random
 from .terrain import generate_reference_and_limits
 
 class Submarine:
@@ -75,8 +77,10 @@ class Mission:
 
     @classmethod
     def from_csv(cls, file_name: str):
-        # You are required to implement this method
-        pass
+        data = pd.read_csv(file_name)
+        random_index = random.randint(0, len(data) - 1)
+        random_instance = data.iloc[random_index]
+        return random_instance
 
 
 class ClosedLoop:
