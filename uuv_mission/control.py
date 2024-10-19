@@ -1,4 +1,4 @@
-class Controller():
+class Controller:
     def __init__(self):
         #initialize the controller with gains
         self.k_p = 0.15
