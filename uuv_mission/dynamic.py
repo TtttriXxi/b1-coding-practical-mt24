@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import random
 from .terrain import generate_reference_and_limits
-from control import Controller
+from .control import Controller
 
 class Submarine:
     def __init__(self):
@@ -79,9 +79,8 @@ class Mission:
     @classmethod
     def from_csv(cls, file_name: str):
         data = pd.read_csv(file_name)
-        random_index = random.randint(0, len(data) - 1)
-        random_instance = data.iloc[random_index]
-        return random_instance
+        (reference, cave_height, cave_depth) = (data.iloc[:,0], data.iloc[:,1], data.iloc[:,2])
+        return cls(reference, cave_height, cave_depth)
 
 
 class ClosedLoop:
@@ -89,7 +88,7 @@ class ClosedLoop:
         self.plant = plant
         self.controller = controller
 
-    def simulate(self,  mission: Mission, disturbances: np.ndarray) -> Trajectory:
+    def simulate(self, mission: Mission, disturbances: np.ndarray) -> Trajectory:
 
         T = len(mission.reference)
         if len(disturbances) < T:
